@@ -1,13 +1,6 @@
 import { Component, signal, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
-import { CheckboxModule } from 'primeng/checkbox';
-import { SliderModule } from 'primeng/slider';
-import { TagModule } from 'primeng/tag';
-import { SelectModule } from 'primeng/select';
 
 import {
   TemplateService,
@@ -18,17 +11,7 @@ import { NetworkService } from './services/network.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    CardModule,
-    InputTextModule,
-    CheckboxModule,
-    SliderModule,
-    TagModule,
-    SelectModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -51,10 +34,6 @@ export class App {
     { label: 'No', value: 'no' },
     { label: 'N/A', value: 'na' },
   ];
-
-  toSelectOptions(options: string[] = []) {
-    return options.map((o) => ({ label: o, value: o }));
-  }
 
   syncTemplates(): void {
     this.templateService.fetchTemplates().subscribe((t) => this.templates.set(t));
