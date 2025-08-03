@@ -1,0 +1,24 @@
+[
+  {
+    "id": "rolling-mill",
+    "name": "Control Laminador",
+    "fields": [
+      { "name": "temperature", "type": "number", "label": "Temperatura (°C)", "min": 0, "max": 1000 },
+      { "name": "lubricated", "type": "boolean", "label": "Lubricado" },
+      { "name": "mode", "type": "select", "label": "Modo", "options": ["Auto", "Manual", "Mantenimiento"] },
+      { "name": "valve", "type": "tristate", "label": "Válvula de seguridad" },
+      { "name": "vibration", "type": "slider", "label": "Vibración", "min": 0, "max": 10 }
+    ]
+  },
+  {
+    "id": "furnace",
+    "name": "Inspección Horno",
+    "fields": [
+      { "name": "pressure", "type": "number", "label": "Presión", "min": 0, "max": 500 },
+      { "name": "cooling", "type": "boolean", "label": "Sistema de enfriamiento activo" },
+      { "name": "state", "type": "select", "label": "Estado", "options": ["OK", "Observación", "Reparar"] },
+      { "name": "guard", "type": "tristate", "label": "Guardas instaladas" },
+      { "name": "load", "type": "slider", "label": "Carga", "min": 0, "max": 100 }
+    ]
+  }
+]
