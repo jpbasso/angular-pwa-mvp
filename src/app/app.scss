@@ -1,18 +1,4 @@
-.status {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.status.online {
-  color: green;
-}
-
-.status.offline {
-  color: red;
-}
-
 .field {
-  margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
 }
