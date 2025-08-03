@@ -1,75 +1,74 @@
-<p-card>
-  <p-tag
-    class="mb-3"
-    [severity]="online() ? 'success' : 'danger'"
-    >{{ online() ? 'Online' : 'Offline' }}</p-tag
-  >
+<div class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <span *ngIf="online(); else offlineTag" class="tag is-success status">Online</span>
+        <ng-template #offlineTag>
+          <span class="tag is-danger status">Offline</span>
+        </ng-template>
 
-  <button
-    pButton
-    type="button"
-    label="Descargar plantillas"
-    icon="pi pi-download"
-    class="mb-3"
-    (click)="syncTemplates()"
-  ></button>
+        <button class="button is-primary is-fullwidth mt-4" type="button" (click)="syncTemplates()">
+          Descargar plantillas
+        </button>
 
-  <div *ngIf="templates().length" class="mb-3">
-    <p-select
-      [options]="templateOptions()"
-      optionLabel="label"
-      placeholder="Seleccione checklist"
-      (onChange)="selectTemplate($event.value)"
-    ></p-select>
-  </div>
+        <div *ngIf="templates().length" class="field mt-4">
+          <label class="label">Seleccione checklist</label>
+          <div class="control">
+            <div class="select is-fullwidth">
+              <select (change)="selectTemplate($event.target.value)">
+                <option value="" selected disabled>Seleccione checklist</option>
+                <option *ngFor="let option of templateOptions()" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-  <form
-    class="p-fluid"
-    [formGroup]="form"
-    (ngSubmit)="submit()"
-    *ngIf="selectedTemplate() as tpl"
-  >
-    <div *ngFor="let field of tpl.fields" class="field mb-3">
-      <label [for]="field.name">{{ field.label }}</label>
-      <ng-container [ngSwitch]="field.type">
-        <input
-          *ngSwitchCase="'number'"
-          type="number"
-          pInputText
-          [formControlName]="field.name"
-          [attr.min]="field.min"
-          [attr.max]="field.max"
-        />
-        <p-checkbox
-          *ngSwitchCase="'boolean'"
-          [formControlName]="field.name"
-          binary="true"
-        ></p-checkbox>
-        <p-select
-          *ngSwitchCase="'select'"
-          [options]="toSelectOptions(field.options)"
-          optionLabel="label"
-          [formControlName]="field.name"
-        ></p-select>
-        <p-select
-          *ngSwitchCase="'tristate'"
-          [options]="tristateOptions"
-          optionLabel="label"
-          [formControlName]="field.name"
-        ></p-select>
-        <p-slider
-          *ngSwitchCase="'slider'"
-          [min]="field.min"
-          [max]="field.max"
-          [formControlName]="field.name"
-        ></p-slider>
-      </ng-container>
+        <form *ngIf="selectedTemplate() as tpl" [formGroup]="form" (ngSubmit)="submit()" class="mt-4">
+          <div *ngFor="let field of tpl.fields" class="field">
+            <label class="label" [for]="field.name">{{ field.label }}</label>
+            <div class="control" [ngSwitch]="field.type">
+              <input
+                *ngSwitchCase="'number'"
+                class="input"
+                type="number"
+                [formControlName]="field.name"
+                [attr.min]="field.min"
+                [attr.max]="field.max"
+              />
+              <label *ngSwitchCase="'boolean'" class="checkbox">
+                <input type="checkbox" [formControlName]="field.name" />
+              </label>
+              <div *ngSwitchCase="'select'" class="select is-fullwidth">
+                <select [formControlName]="field.name">
+                  <option *ngFor="let opt of field.options" [value]="opt">{{ opt }}</option>
+                </select>
+              </div>
+              <div *ngSwitchCase="'tristate'" class="select is-fullwidth">
+                <select [formControlName]="field.name">
+                  <option *ngFor="let opt of tristateOptions" [value]="opt.value">
+                    {{ opt.label }}
+                  </option>
+                </select>
+              </div>
+              <input
+                *ngSwitchCase="'slider'"
+                class="slider is-fullwidth"
+                type="range"
+                [formControlName]="field.name"
+                [attr.min]="field.min"
+                [attr.max]="field.max"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button class="button is-link" type="submit">Enviar</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    <button
-      pButton
-      type="submit"
-      label="Enviar"
-      icon="pi pi-send"
-    ></button>
-  </form>
-</p-card>
+  </div>
+</div>
