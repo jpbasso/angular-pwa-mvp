@@ -2,12 +2,18 @@
   <div class="container">
     <div class="card">
       <div class="card-content">
-        <span *ngIf="online(); else offlineTag" class="tag is-success status">Online</span>
+        <span *ngIf="online(); else offlineTag" class="tag is-success status"
+          >Online</span
+        >
         <ng-template #offlineTag>
           <span class="tag is-danger status">Offline</span>
         </ng-template>
 
-        <button class="button is-primary is-fullwidth mt-4" type="button" (click)="syncTemplates()">
+        <button
+          class="button is-primary is-fullwidth mt-4"
+          type="button"
+          (click)="syncTemplates()"
+        >
           Descargar plantillas
         </button>
 
@@ -15,9 +21,12 @@
           <label class="label">Seleccione checklist</label>
           <div class="control">
             <div class="select is-fullwidth">
-              <select (change)="selectTemplate($event.target.value)">
+              <select (change)="selectTemplate($event)">
                 <option value="" selected disabled>Seleccione checklist</option>
-                <option *ngFor="let option of templateOptions()" [value]="option.value">
+                <option
+                  *ngFor="let option of templateOptions()"
+                  [value]="option.value"
+                >
                   {{ option.label }}
                 </option>
               </select>
@@ -25,7 +34,12 @@
           </div>
         </div>
 
-        <form *ngIf="selectedTemplate() as tpl" [formGroup]="form" (ngSubmit)="submit()" class="mt-4">
+        <form
+          *ngIf="selectedTemplate() as tpl"
+          [formGroup]="form"
+          (ngSubmit)="submit()"
+          class="mt-4"
+        >
           <div *ngFor="let field of tpl.fields" class="field">
             <label class="label" [for]="field.name">{{ field.label }}</label>
             <div class="control" [ngSwitch]="field.type">
@@ -42,12 +56,17 @@
               </label>
               <div *ngSwitchCase="'select'" class="select is-fullwidth">
                 <select [formControlName]="field.name">
-                  <option *ngFor="let opt of field.options" [value]="opt">{{ opt }}</option>
+                  <option *ngFor="let opt of field.options" [value]="opt">
+                    {{ opt }}
+                  </option>
                 </select>
               </div>
               <div *ngSwitchCase="'tristate'" class="select is-fullwidth">
                 <select [formControlName]="field.name">
-                  <option *ngFor="let opt of tristateOptions" [value]="opt.value">
+                  <option
+                    *ngFor="let opt of tristateOptions"
+                    [value]="opt.value"
+                  >
                     {{ opt.label }}
                   </option>
                 </select>
