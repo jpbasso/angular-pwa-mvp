@@ -21,10 +21,10 @@ export class App {
   private fb = inject(FormBuilder);
 
   templates = signal<ChecklistTemplate[]>(
-    this.templateService.getStoredTemplates()
+    this.templateService.getStoredTemplates(),
   );
   templateOptions = computed(() =>
-    this.templates().map((t) => ({ label: t.name, value: t.id }))
+    this.templates().map((t) => ({ label: t.name, value: t.id })),
   );
   selectedTemplate = signal<ChecklistTemplate | null>(null);
   form: FormGroup = this.fb.group({});
@@ -36,11 +36,15 @@ export class App {
   ];
 
   syncTemplates(): void {
-    this.templateService.fetchTemplates().subscribe((t) => this.templates.set(t));
+    this.templateService
+      .fetchTemplates()
+      .subscribe((t) => this.templates.set(t));
   }
 
-  selectTemplate(id: string): void {
-    const tpl = this.templates().find((t) => t.id === id) || null;
+  selectTemplate(event: Event): void {
+    const target = event.target as HTMLSelectElement | null;
+    const id = target?.value;
+    const tpl = id ? this.templates().find((t) => t.id === id) || null : null;
     this.selectedTemplate.set(tpl);
     if (tpl) {
       const group: Record<string, unknown> = {};
